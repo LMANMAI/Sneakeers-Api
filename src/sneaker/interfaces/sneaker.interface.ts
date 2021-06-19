@@ -1,5 +1,6 @@
 import { Document } from 'mongoose';
-export interface Sneaker extends Document {
+
+export interface ISneaker extends Document {
   readonly name: string;
   readonly relaseYear: string;
   readonly imageURL: string;

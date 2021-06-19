@@ -1,38 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Sneaker } from './interfaces/sneaker.interface';
-import { CreateSneakerDTO } from './dto/sneaker.dto';
+import { ISneaker } from './interfaces/sneaker.interface';
 @Injectable()
 export class SneakerService {
   constructor(
-    @InjectModel('Sneaker') private readonly sneakerModel: Model<Sneaker>,
+    @InjectModel('Sneaker') private readonly sneakerModel: Model<ISneaker>,
   ) {}
 
-  async getSneakers(): Promise<Sneaker[]> {
+  async findAll(): Promise<ISneaker[]> {
     const sneakers = await this.sneakerModel.find();
     return sneakers;
   }
-  async getSneaker(sneakerID: string): Promise<Sneaker> {
+  async findOne(sneakerID: string): Promise<ISneaker> {
     const sneaker = await this.sneakerModel.findById(sneakerID);
     return sneaker;
   }
-  async createSneaker(createSneakerDTO: CreateSneakerDTO): Promise<Sneaker> {
-    const new_sneaker = new this.sneakerModel(createSneakerDTO);
+  async create(sneaker: ISneaker): Promise<ISneaker> {
+    const new_sneaker = new this.sneakerModel(sneaker);
     return await new_sneaker.save();
   }
-  async updateSneaker(
-    sneakerID: string,
-    createSneakerDTO: CreateSneakerDTO,
-  ): Promise<Sneaker> {
+  async update(sneakerID: string, sneaker: ISneaker): Promise<ISneaker> {
     const sneaker_updated = await this.sneakerModel.findByIdAndUpdate(
       sneakerID,
-      createSneakerDTO,
+      sneaker,
       { new: true },
     );
     return sneaker_updated;
   }
-  async deleteSneaker(sneakerID: string): Promise<Sneaker> {
+  async delete(sneakerID: string): Promise<ISneaker> {
     const deleted_sneaker = await this.sneakerModel.findByIdAndDelete(
       sneakerID,
     );
