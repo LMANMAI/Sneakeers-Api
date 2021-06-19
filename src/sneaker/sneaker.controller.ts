@@ -55,8 +55,14 @@ export class SneakerController {
     @Body() sneaker: ISneaker,
     @Param('sneakerID') sneakerID,
   ) {
+<<<<<<< HEAD
     const new_sneaker = await this.sneakerService.update(sneakerID, sneaker);
     if (!new_sneaker) throw new NotFoundException('Cannot update the sneaker');
     res.status(HttpStatus.OK).json({ new_sneaker });
+=======
+    const newSneaker = await this.sneakerService.update(sneakerID, sneaker);
+    if (!newSneaker) throw new NotFoundException('Cannot update the sneaker');
+    res.status(HttpStatus.OK).json({ newSneaker });
+>>>>>>> c559fadb3a45c05667d21481bc8bbb0048874d47
   }
 }
