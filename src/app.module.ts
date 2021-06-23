@@ -7,10 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env' }),
-    MongooseModule.forRoot(
-      'mongodb+srv://lucasmanmai:YellowRadio1@cluster0.fnusd.mongodb.net/sneaker',
-      { useNewUrlParser: true },
-    ),
+    MongooseModule.forRoot(process.env.DB_URL, { useNewUrlParser: true }),
     SneakerModule,
   ],
 
