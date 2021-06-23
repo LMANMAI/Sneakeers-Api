@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRoot(process.env.DB_URL, { useNewUrlParser: true }),
     SneakerModule,
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })
