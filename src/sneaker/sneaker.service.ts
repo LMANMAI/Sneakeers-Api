@@ -29,14 +29,9 @@ export class SneakerService {
     return sneaker_updated;
   }
   async delete(sneakerID: string): Promise<ISneaker> {
-<<<<<<< HEAD
     const deleted_sneaker = await this.sneakerModel.findByIdAndDelete(
       sneakerID,
     );
     return deleted_sneaker;
-=======
-    const deleteSneaker = await this.sneakerModel.findByIdAndDelete(sneakerID);
-    return deleteSneaker;
->>>>>>> c559fadb3a45c05667d21481bc8bbb0048874d47
   }
 }
