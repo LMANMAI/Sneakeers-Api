@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ISneaker } from './interfaces/sneaker.interface';
+import { GetSneakersDto } from './dto/get-sneakers-filter.dto';
 @Injectable()
 export class SneakerService {
   constructor(
@@ -10,6 +11,21 @@ export class SneakerService {
 
   async findAll(): Promise<ISneaker[]> {
     const sneakers = await this.sneakerModel.find();
+    return sneakers;
+  }
+  async findAllWithFilter(filterDto: GetSneakersDto): Promise<ISneaker[]> {
+    const { status, search } = filterDto;
+    console.log(filterDto);
+    let sneakers = await this.sneakerModel.find();
+    if (status) {
+      sneakers = sneakers.filter((sneaker) => sneaker.status === status);
+    }
+    if (search) {
+      sneakers = sneakers.filter(
+        (sneaker) =>
+          sneaker.name.includes(search) || sneaker.status.includes(status),
+      );
+    }
     return sneakers;
   }
   async findOne(sneakerID: string): Promise<ISneaker> {
@@ -28,6 +44,7 @@ export class SneakerService {
     );
     return sneaker_updated;
   }
+
   async delete(sneakerID: string): Promise<ISneaker> {
     const deleted_sneaker = await this.sneakerModel.findByIdAndDelete(
       sneakerID,

@@ -9,8 +9,11 @@ import {
   HttpStatus,
   Param,
   NotFoundException,
+  Query,
+  Req,
 } from '@nestjs/common';
-import { ISneaker } from './interfaces/sneaker.interface';
+import { GetSneakersDto } from './dto/get-sneakers-filter.dto';
+import { ISneaker, SneakerStatus } from './interfaces/sneaker.interface';
 import { SneakerService } from './sneaker.service';
 @Controller('sneaker')
 export class SneakerController {
@@ -21,11 +24,22 @@ export class SneakerController {
     const sneakers = await this.sneakerService.findAll();
     return res.status(HttpStatus.OK).json({ sneakers });
   }
-
+  @Get('/search')
+  async getSneakerWithFilter(
+    @Query() filterDto: GetSneakersDto,
+    @Res() res,
+    @Req() req,
+  ): Promise<ISneaker> {
+    console.log('Este es el cuerpo de mi consulta: ', req.query);
+    // sneakers.status = SneakerStatus.OPEN
+    const sneakers = await this.sneakerService.findAllWithFilter(filterDto);
+    return res.status(HttpStatus.OK).json({ sneakers });
+  }
   @Get('/:sneakerID')
   async getSneaker(@Res() res, @Param('sneakerID') sneakerID) {
     const sneaker = await this.sneakerService.findOne(sneakerID);
     if (!sneaker) throw new NotFoundException("Sneaker doesn't exists");
+    sneaker.status = SneakerStatus.OPEN;
     return res.status(HttpStatus.OK).json({ sneaker });
   }
 
