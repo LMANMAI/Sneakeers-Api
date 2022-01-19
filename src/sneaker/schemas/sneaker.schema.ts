@@ -16,4 +16,7 @@ export const SneakerSchema = new Schema({
     default: SneakerStatus.DONE,
     required: true,
   },
+  sizes: {
+    type: [Number],
+  },
 });

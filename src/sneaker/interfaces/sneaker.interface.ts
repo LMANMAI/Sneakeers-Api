@@ -8,6 +8,7 @@ export interface ISneaker extends Document {
   readonly createdAt: Date;
   readonly posterPathImage: string;
   readonly genre: string;
+  readonly sizes: Number[];
   status: SneakerStatus;
 }
 
