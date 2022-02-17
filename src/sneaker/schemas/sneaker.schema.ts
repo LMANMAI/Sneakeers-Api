@@ -6,6 +6,7 @@ export const SneakerSchema = new Schema({
   relaseYear: String,
   posterPathImage: { required: true, trim: true, type: String },
   price: Number,
+  quantity: Number,
   brand: { required: true, trim: true, type: String },
   createdAt: { type: Date, default: Date.now },
   imgs: { type: [String] },

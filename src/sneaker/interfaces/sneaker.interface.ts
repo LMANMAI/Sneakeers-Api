@@ -9,6 +9,7 @@ export interface ISneaker extends Document {
   readonly posterPathImage: string;
   readonly genre: string;
   readonly sizes: Number[];
+  readonly quantity: Number;
   status: SneakerStatus;
 }
 
