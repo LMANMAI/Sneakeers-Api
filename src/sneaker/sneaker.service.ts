@@ -3,14 +3,20 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ISneaker } from './interfaces/sneaker.interface';
 import { GetSneakersDto } from './dto/get-sneakers-filter.dto';
+import { QueryOptions } from './config/query-options';
+
 @Injectable()
 export class SneakerService {
   constructor(
     @InjectModel('Sneaker') private readonly sneakerModel: Model<ISneaker>,
   ) {}
 
-  async findAll(): Promise<ISneaker[]> {
-    const sneakers = await this.sneakerModel.find();
+  async findAll(options: QueryOptions) {
+    const sneakers = await this.sneakerModel
+      .find()
+      .skip(Number(options.offset))
+      .limit(Number(options.limit))
+      .exec();
     return sneakers;
   }
   async findAllWithFilter(filterDto: GetSneakersDto): Promise<ISneaker[]> {

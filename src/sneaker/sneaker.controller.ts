@@ -20,8 +20,9 @@ export class SneakerController {
   constructor(private sneakerService: SneakerService) {}
 
   @Get('/')
-  async getSneakers(@Res() res): Promise<ISneaker> {
-    const sneakers = await this.sneakerService.findAll();
+  async getSneakers(@Res() res, @Req() req): Promise<ISneaker> {
+    //console.log(req.query);
+    const sneakers = await this.sneakerService.findAll(req.query);
     return res.status(HttpStatus.OK).json({ sneakers });
   }
   @Get('/search')
